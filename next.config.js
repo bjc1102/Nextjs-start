@@ -17,6 +17,10 @@ module.exports = {
         //rewrties 사용자를 redirect 시키긴 하지만 주소는 바뀌지 않는다
         source :"/api/movies",
         destination: `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`
+      },
+      {
+        source : "/api/movies/:id",
+        destination: `https://api.themoviedb.org/3/movie/:id?api_key=${API_KEY}`
       }
     ]
   }

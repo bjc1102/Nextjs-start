@@ -1,17 +1,42 @@
 import {useEffect, useState} from "react";
 import Helmet from "../components/Helmet"
+import Link from "next/link"
+import { useRouter } from "next/router";
 
 
 export default function Home({results}) {
 
+    const router = useRouter();
+    const onClick = (id,title, poster_path, overview) => {
+        router.push({
+            pathname:`/movies/${id}`,
+            query:{
+                title,
+                poster_path,
+                overview
+            },
+        },`/movies/${id}`)
+    }
     return  (
         <div className="container">
             <Helmet title="Home"/>
             {results?.map(movie => 
-                <div className="movie" key={movie.id}>
-                <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
-                <h4>{movie.original_title}</h4>
-                </div>)}
+                <div onClick={() => onClick(movie.id, movie.title, movie.poster_path, movie.overview)} className="movie" key={movie.id}>
+                    <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
+                    <h4>
+                        <Link 
+                            href={{
+                            pathname:`/movies/${movie.id}`,
+                            query:{
+                                title:movie.original_title,
+                            },
+                            },`/movies/${movie.id}`}>
+                             <a>{movie.original_title}</a>
+                         </Link>
+                    </h4>
+                </div>
+    
+                )}
             <style jsx>{`
                 .container {
                 display: grid;
